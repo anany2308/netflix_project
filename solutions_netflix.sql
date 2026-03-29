@@ -2,7 +2,7 @@
 -- 15 Business Problems & Solutions
 
 
-SELECT * FROM NETFLIX
+
 
 -- 1. Count the number of Movies vs TV Shows
 
@@ -10,12 +10,12 @@ SELECT * FROM NETFLIX
 select type,
 count(*) as total_number
 from netflix
-group by type
+group by type;
 
 --OR
 select sum(case when type='Movie'then 1 else 0 end ) as number_of_movies,
 sum(case when type='TV Show'then 1 else 0 end ) as number_of_tv_shows
-from netflix
+from netflix;
 
 
 
@@ -33,7 +33,7 @@ rating as most_common_rating
 from netflix
 group by rating 
 order by count(*) desc
-limit 1
+limit 1;
 
 
 --3. List all movies released in a specific year (e.g., 2020)
@@ -41,7 +41,7 @@ limit 1
 
 select *
 from netflix 
-where type= 'Movie' and release_year=2020
+where type= 'Movie' and release_year=2020;
 
 
 
@@ -57,7 +57,7 @@ from
 	from netflix) t
 group by new_country
 order by count(*) desc
-limit 5
+limit 5;
 
 
 
@@ -68,7 +68,7 @@ select *
 from netflix 
 where cast(split_part(duration,' ', 1) as int)= (select 
 											     max(cast(split_part(duration,' ', 1) as int)) as maximum_duration
-											     from netflix)
+											     from netflix);
 
 
 
@@ -81,16 +81,10 @@ where coalesce(extract(year from cast(date_added as date)),0) in (select
 																from netflix
 																group by 1
 																order by 1 desc
-																limit 5
-																)
+																limit 5);
+														
 
-		--or 
 
-select current_date - interval '5 years' -- problem because data is not updated till 2026)4
-select
-*
-from netflix 
-where cast(date_added as date)>= current_date - interval '5 years'
 
 
 
@@ -100,7 +94,7 @@ where cast(date_added as date)>= current_date - interval '5 years'
 
 
 select * from netflix
-where director = 'Rajiv Chilaka'
+where director like '%Rajiv Chilaka%';
 
 
 
@@ -112,7 +106,7 @@ where director = 'Rajiv Chilaka'
 
 select *
 from netflix
-where type ='TV Show' and cast(split_part(duration,' ', 1) as int) > 5
+where type ='TV Show' and cast(split_part(duration,' ', 1) as int) > 5;
 
 
 
@@ -121,15 +115,14 @@ where type ='TV Show' and cast(split_part(duration,' ', 1) as int) > 5
 select trim(unnest(string_to_array(coalesce(listed_in,'unknown'),','))) as new_genre,
 count(*) as total_content
 from netflix
-group by 1        
+group by 1;       
 
 
 
 
 
 
-select*
-from netflix
+
 
 
 --10.Find each year and the average numbers of content release in India on netflix. 
@@ -146,7 +139,7 @@ from
 	group by 1
 	order by 1) t
 order by 2 desc
-limit 5
+limit 5;
 
 
 
@@ -157,7 +150,7 @@ limit 5
 
 select *
 from netflix
-where type = 'Movie' and listed_in = 'Documentaries'
+where type = 'Movie' and listed_in like '%Documentaries%';
 
 
 
@@ -165,7 +158,7 @@ where type = 'Movie' and listed_in = 'Documentaries'
 
 select *
 from netflix
-where director is null
+where director is null;
 
 
 
@@ -180,7 +173,7 @@ where release_year in   (select
 						limit 10
 						)       
 
-						and casts like '%Salman Khan%'
+						and casts like '%Salman Khan%';
         
 
 
@@ -195,9 +188,9 @@ select
 	where type='Movie' and  country like '%India%'
 	group by 1 
 	order by 2 desc
-	limit 10
+	limit 10;
 
-select * from netflix
+
 
 -- 15.Categorize the content based on the presence of the keywords 'kill' and 'violence' in 
 -- the description field. Label content containing these keywords as 'Bad' and all other 
@@ -211,7 +204,7 @@ from
 	from netflix
 	) t
 group by 1
-order by 2 desc
+order by 2 desc;
 
 
 
